@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">JunaebSodexo</string>
+    <string name="usuario">Usuario</string>
+    <string name="contrase_a">Contraseña</string>
+    <string name="nothing">-</string>
+    <string name="token">TOKEN:</string>
+    <string name="conectar">CONECTAR</string>
+</resources>
