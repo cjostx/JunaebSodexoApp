@@ -13,9 +13,11 @@
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
         android:clickable="true"
+        android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_refresh_black_24dp" />
+        app:srcCompat="@drawable/ic_refresh_black_24dp"
+        tools:ignore="VectorDrawableCompat" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/settingButton"
@@ -24,11 +26,13 @@
         android:layout_marginBottom="16dp"
         android:layout_marginStart="16dp"
         android:clickable="true"
+        android:focusable="true"
         android:tint="@android:color/background_light"
         app:backgroundTint="?attr/colorBackgroundFloating"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_settings_black_24dp" />
+        app:srcCompat="@drawable/ic_settings_black_24dp"
+        tools:ignore="VectorDrawableCompat" />
 
     <TextView
         android:id="@+id/textView"
@@ -36,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:text="Usuario:"
+        android:text="@string/User"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -46,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:text="-"
+        android:text="@string/Nothing_again"
         app:layout_constraintStart_toEndOf="@+id/textView"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -57,7 +61,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="$00000"
+        android:text="@string/default_saldo"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,7 +74,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
-        android:text="Tu saldo actual es:"
+        android:text="@string/saldo_message"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -83,7 +87,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text='"FECHA"'
+        android:text="@string/fecha"
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

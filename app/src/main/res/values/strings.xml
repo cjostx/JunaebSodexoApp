@@ -5,4 +5,9 @@
     <string name="nothing">-</string>
     <string name="token">TOKEN:</string>
     <string name="conectar">CONECTAR</string>
+    <string name="fecha">FECHA</string>
+    <string name="saldo_message">Tu saldo actual es:</string>
+    <string name="default_saldo">$00000</string>
+    <string name="Nothing_again">-</string>
+    <string name="User">Usuario:</string>
 </resources>
