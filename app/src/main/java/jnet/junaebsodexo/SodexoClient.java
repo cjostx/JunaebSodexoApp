@@ -37,7 +37,7 @@ public class SodexoClient {
     public boolean login;
     private HttpClient client = null;
 
-    private SodexoClient(String username, String password) throws IOException {
+    public SodexoClient(String username, String password) throws IOException {
         
         //Obtener Token-Wp-nonce
         Document TokenWP = Jsoup.parse(getContentHTML("http://www.becajunaebsodexo.cl/"));
@@ -74,7 +74,13 @@ public class SodexoClient {
         String Time = String.valueOf(System.currentTimeMillis());
         Time = Time.substring(0, Time.length()-3) + "000";
         String info = URLEncoder.encode(infodb, "UTF-8") + Time;
-        String enc = sha1(infodb + Time + password).toLowerCase();
+        String enc = null;
+        try {
+            enc = sha1(infodb + Time + password).toLowerCase();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        assert enc != null;
         String passwordEnc = Base64.encodeToString(enc.getBytes(), Base64.DEFAULT);
 
         try 
@@ -177,7 +183,7 @@ public class SodexoClient {
     }
 
     public String sha1(String input) throws UnsupportedEncodingException, NoSuchAlgorithmException {
-        String sha1 = null;
+        String sha1;
         MessageDigest msdDigest = MessageDigest.getInstance("SHA-1");
         msdDigest.update(input.getBytes("UTF-8"), 0, input.length());
         sha1 = new BigInteger(1, msdDigest.digest()).toString(16);
