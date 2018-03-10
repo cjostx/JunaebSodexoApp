@@ -38,9 +38,11 @@ public class MainActivity extends AppCompatActivity {
 
         final TextView rLabelAmount = findViewById(R.id.amountLabel);
         final TextView rUser = findViewById(R.id.user_rut_label);
+        final TextView rDate = findViewById(R.id.dateRefresh);
 
         rLabelAmount.setText("$"+sharedPref.getString("balance", "000000"));
         String User = sharedPref.getString("user", "123456789");
+        rDate.setText(sharedPref.getString("actualDate", ""));
         User = User.substring(0, User.length()-1)+"-"+User.substring(User.length()-1);
         rUser.setText(User);
 
@@ -78,8 +80,10 @@ public class MainActivity extends AppCompatActivity {
                 JSONObject ReturnBalance = (JSONObject) Data.get("result");
                 JSONObject Balance = (JSONObject) ReturnBalance.get("return");
                 editor.putString("balance", Balance.get("amountBalance").toString());
+                editor.putString("actualDate", cal.getTime().toString());
                 editor.apply();
                 rLabelAmount.setText("$" + sharedPref.getString("balance", "000000"));
+                rDate.setText(sharedPref.getString("actualDate", ""));
                 String User1 = sharedPref.getString("user", "123456789");
                 User1 = User1.substring(0, User1.length() - 1) + "-" + User1.substring(User1.length() - 1);
                 rUser.setText(User1);
