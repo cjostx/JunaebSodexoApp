@@ -1,11 +1,9 @@
 package jnet.junaebsodexo;
 
 import android.util.Base64;
-import android.util.Log;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
@@ -36,10 +34,10 @@ import java.util.Map;
 
 public class SodexoClient {
     
-    public HttpClient client = null;
     public boolean login;
-    
-    public SodexoClient(String username, String password) throws UnsupportedEncodingException, IOException {
+    private HttpClient client = null;
+
+    private SodexoClient(String username, String password) throws IOException {
         
         //Obtener Token-Wp-nonce
         Document TokenWP = Jsoup.parse(getContentHTML("http://www.becajunaebsodexo.cl/"));
@@ -97,18 +95,33 @@ public class SodexoClient {
             BufferedReader reader = 
                   new BufferedReader(
                   new InputStreamReader(response.getEntity().getContent()));
-            
-            String sOutput = "";
+
+            StringBuilder sOutput = new StringBuilder();
             String line;
             while ((line = reader.readLine()) != null) 
             {
-                sOutput += line;
+                sOutput.append(line);
             }
             login = sOutput.length() >= 0;
         }
         catch (IOException e) {
             login =false;
         }
+    }
+
+    public static String getContentHTML(String URL) throws IOException {
+        URL url = new URL(URL);
+        URLConnection uc = url.openConnection();
+        uc.connect();
+        StringBuilder contenido;
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(uc.getInputStream()))) {
+            String inputLine;
+            contenido = new StringBuilder();
+            while ((inputLine = in.readLine()) != null) {
+                contenido.append(inputLine);
+            }
+        }
+        return contenido.toString();
     }
     
     public String ExtractData (String sURL) throws IOException {
@@ -117,31 +130,25 @@ public class SodexoClient {
         HttpGet get = new HttpGet(PROFILE_URL);
         HttpResponse response;
         String Data = "";
-        try 
-        {
-            response = client.execute(get);
-            BufferedReader reader = 
-                   new BufferedReader(
-                   new InputStreamReader(response.getEntity().getContent()));
-            String line;
-            while ((line = reader.readLine()) != null) 
-            {
-                Data += line;
-            }
-        } 
-        catch (ClientProtocolException e) {}  
-            return Data;
+        response = client.execute(get);
+        BufferedReader reader =
+                new BufferedReader(
+                        new InputStreamReader(response.getEntity().getContent()));
+        String line;
+        while ((line = reader.readLine()) != null) {
+            Data += line;
+        }
+        return Data;
 
     }
     
     public Map getInfoToken () throws IOException {
         Document Beneficiarios = Jsoup.parse(ExtractData("http://www.becajunaebsodexo.cl/beneficiarios/?a=balance"));
         Elements ScriptVars = Beneficiarios.getElementsByTag("script");
-               
+
         Map<String, String> Session = new Hashtable<>();
         String res;
         for (Element element : ScriptVars ){
-            res= "";
             if (element.data().contains("var token=")) {
                 res = element.data().substring(element.data().indexOf("=")+2);
                 res = res.substring(0, res.length()-1);
@@ -165,48 +172,16 @@ public class SodexoClient {
                 res = element.data().substring(element.data().indexOf("var user_email")+18);
                 Session.put("user_email", res.substring(0, res.indexOf(";")-1));
             }
-        }        
+        }
         return Session;
     }
-    
-    public String sha1(String input) {
-        String sha1 = null;
-        try {
-            MessageDigest msdDigest = MessageDigest.getInstance("SHA-1");
-            msdDigest.update(input.getBytes("UTF-8"), 0, input.length());
-            sha1 = new BigInteger(1 ,msdDigest.digest()).toString(16);
-        } catch (UnsupportedEncodingException | NoSuchAlgorithmException e) {
-            
-        }
-        return sha1;
-    }
-    /*public String base64encode(String input) {
-        String b64;
-        byte[] bytesEncoded = Base64.encodeBase64(input.getBytes());
-        b64 = new String(bytesEncoded);
-        return b64;
-    }
-    
-    public String base64decode(String input) {
-        String b64;
-        byte[] bytesEncoded = Base64.decodeBase64(input);
-        b64 = new String(bytesEncoded);
-        return b64;
-    }*/
 
-    public static String getContentHTML(String URL) throws IOException {
-        URL url = new URL(URL);
-        URLConnection uc = url.openConnection();
-        uc.connect();
-        String contenido;
-        try (BufferedReader in = new BufferedReader(new InputStreamReader(uc.getInputStream()))) {
-            String inputLine;
-            contenido = "";
-            while ((inputLine = in.readLine()) != null) {
-                contenido += inputLine;
-            }
-        }
-        return contenido;
+    public String sha1(String input) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        String sha1 = null;
+        MessageDigest msdDigest = MessageDigest.getInstance("SHA-1");
+        msdDigest.update(input.getBytes("UTF-8"), 0, input.length());
+        sha1 = new BigInteger(1, msdDigest.digest()).toString(16);
+        return sha1;
     }
         
 }
