@@ -37,7 +37,7 @@ public class setting extends AppCompatActivity {
 
         final EditText user = findViewById(R.id.userID);
         final EditText pass = findViewById(R.id.passID);
-        final TextView rtokenLabel = findViewById(R.id.token);
+        final TextView rTokenLabel = findViewById(R.id.token);
         Button ConnectButton = findViewById(R.id.connectionButton);
 
         ConnectButton.setOnClickListener((View view) -> {
@@ -85,7 +85,7 @@ public class setting extends AppCompatActivity {
                     editor.putString("serviceid", "15");
                     editor.putString("balance", Balance.get("amountBalance").toString());
                     editor.apply();
-                    rtokenLabel.setText(getToken.get("token") + ". SALDO: " + Balance.get("amountBalance"));
+                    rTokenLabel.setText(getToken.get("token") + ". SALDO: " + Balance.get("amountBalance"));
                 } catch (ParseException | NullPointerException | IOException e) {
                     e.printStackTrace();
                 }
