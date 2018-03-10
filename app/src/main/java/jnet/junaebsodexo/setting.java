@@ -40,10 +40,12 @@ public class setting extends AppCompatActivity {
         final TextView rTokenLabel = findViewById(R.id.token);
         Button ConnectButton = findViewById(R.id.connectionButton);
 
+        final String sUser = user.getText().toString().replace(".", "").replace("-", "");
+
         ConnectButton.setOnClickListener((View view) -> {
             SodexoClient uClient = null;
             try {
-                uClient = new SodexoClient(user.getText().toString(), pass.getText().toString());
+                uClient = new SodexoClient(sUser, pass.getText().toString());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -56,7 +58,7 @@ public class setting extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 Calendar cal = Calendar.getInstance();
-                editor.putString("user", user.getText().toString());
+                editor.putString("user", sUser);
                 editor.putString("pass", pass.getText().toString());
                 StringBuilder URLBalance = new StringBuilder();
                 URLBalance.append("http://www.becajunaebsodexo.cl/wp-content/plugins/beneficiarios/api.php?action=balance");
@@ -84,6 +86,7 @@ public class setting extends AppCompatActivity {
                     editor.putString("clientid", "1");
                     editor.putString("serviceid", "15");
                     editor.putString("balance", Balance.get("amountBalance").toString());
+                    editor.putString("actualDate", cal.getTime().toString());
                     editor.apply();
                     rTokenLabel.setText(getToken.get("token") + ". SALDO: " + Balance.get("amountBalance"));
                 } catch (ParseException | NullPointerException | IOException e) {
