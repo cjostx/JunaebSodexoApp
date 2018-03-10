@@ -1,8 +1,10 @@
 # JunaebSodexoApp
 
 Simple Project using CURL, Jsoup, Simple Json. 
+[Download APK!](https://github.com/cjostx/JunaebSodexoApp/blob/master/screenshot/app-debug.apk?raw=true)
 
-![alt text](https://github.com/cjostx/JunaebSodexoApp/blob/master/screenshot/layout-2018-03-09-180612.png?raw=true) 
-![alt text](https://github.com/cjostx/JunaebSodexoApp/blob/master/screenshot/layout-2018-03-09-180649.png?raw=true)
+
+![Image01](https://github.com/cjostx/JunaebSodexoApp/blob/master/screenshot/Image01.png?raw=true) 
+![Image02](https://github.com/cjostx/JunaebSodexoApp/blob/master/screenshot/Image02.png?raw=true)
 
 
