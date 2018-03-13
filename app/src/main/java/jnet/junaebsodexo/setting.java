@@ -40,9 +40,9 @@ public class setting extends AppCompatActivity {
         final TextView rTokenLabel = findViewById(R.id.token);
         Button ConnectButton = findViewById(R.id.connectionButton);
 
-        final String sUser = user.getText().toString().replace(".", "").replace("-", "");
 
         ConnectButton.setOnClickListener((View view) -> {
+            String sUser = user.getText().toString().replace(".", "").replace("-", "");
             SodexoClient uClient = null;
             try {
                 uClient = new SodexoClient(sUser, pass.getText().toString());
@@ -75,7 +75,7 @@ public class setting extends AppCompatActivity {
                 URLBalance.append(cal.get(Calendar.YEAR));
                 URLBalance.append("&clientid=1");
                 URLBalance.append("&serviceid=15");
-                System.out.println(URLBalance.toString());
+                System.out.println(sUser + " - " + URLBalance.toString());
                 JSONParser parser = new JSONParser();
                 JSONObject Data;
                 try {
@@ -89,6 +89,7 @@ public class setting extends AppCompatActivity {
                     editor.putString("actualDate", cal.getTime().toString());
                     editor.apply();
                     rTokenLabel.setText(getToken.get("token") + ". SALDO: " + Balance.get("amountBalance"));
+
                 } catch (ParseException | NullPointerException | IOException e) {
                     e.printStackTrace();
                 }
